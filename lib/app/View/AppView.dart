@@ -9,6 +9,7 @@ class Appview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBarWidget(),
+      body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: navigationShell.goBranch,

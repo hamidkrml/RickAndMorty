@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/Thema/thema.dart';
-import 'package:rickandmorty/app/View/AppView.dart';
-import 'package:rickandmorty/app/router.dart';
+
+import 'package:rickandmorty/app/Thema/router.dart';
 
 void main() => runApp(const MyApp());
 
