@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/Thema/thema.dart';
+import 'package:rickandmorty/app/View/AppView.dart';
+import 'package:rickandmorty/app/router.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,14 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       theme: AppThema.lightTheme,
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Material App Bar')),
-        body: const Center(child: Text('Hello World')),
-      ),
     );
   }
 }
