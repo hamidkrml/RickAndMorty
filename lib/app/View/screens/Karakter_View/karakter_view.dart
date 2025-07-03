@@ -13,12 +13,13 @@ class KarakterView extends StatefulWidget {
 
 class _KarakterViewState extends State<KarakterView> {
   @override
-  @override
   void initState() {
     super.initState();
+    // Sayfa açıldığında karakter listesini çeker
     context.read<KarakterViewmodel>().getkarakterler();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -26,26 +27,25 @@ class _KarakterViewState extends State<KarakterView> {
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: Column(
             children: [
-              // Burada karakterlerin arama yapacagi textfield
-              const SizedBox(height: 12),
+              const SizedBox(height: 12), // Üstte boşluk bırakır
+              _searchinputWidget(context), // Arama kutusu
 
-              _searchinputWidget(context),
-
-              // Burada karakterlerin listeleneceği alan
+              // Karakterlerin listeleneceği alan
               Consumer<KarakterViewmodel>(
                 builder: (context, viewmodel, child) {
                   if (viewmodel.karakterModelSonuc == null) {
+                    // Veri gelene kadar yükleniyor göstergesi
                     return const CircularProgressIndicator.adaptive();
                   } else {
+                    // Karakter kartlarını liste olarak gösterir
                     return KarakterCardListview(
                       karakter: viewmodel.karakterModelSonuc!.karakter,
                       onLoadMore: () => viewmodel.getkaraktermore(),
+                      loadMore: viewmodel.loadMore,
                     );
                   }
                 },
               ),
-              // SizedBox(height: 18),
-              // const KarakterCardview(),
             ],
           ),
         ),
@@ -53,6 +53,7 @@ class _KarakterViewState extends State<KarakterView> {
     );
   }
 
+  // Arama kutusu widget'ı
   Widget _searchinputWidget(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 16.0),
@@ -60,11 +61,7 @@ class _KarakterViewState extends State<KarakterView> {
         decoration: InputDecoration(
           labelText: 'Karakterlerde ara',
           labelStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              /* renkler theme cekmek olcusun fala icin */
-            ),
-          ),
+          border: const OutlineInputBorder(),
           prefixIcon: const Icon(Icons.search),
           suffixIcon: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
         ),

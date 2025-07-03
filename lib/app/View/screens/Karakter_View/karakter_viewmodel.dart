@@ -9,28 +9,36 @@ class KarakterViewmodel extends ChangeNotifier {
   KarakterModelSonuc? _karakterModelSonuc;
   KarakterModelSonuc? get karakterModelSonuc => _karakterModelSonuc;
 
+  // İlk karakter listesini çeker
   void getkarakterler() async {
     _karakterModelSonuc = await _apiservice.getkarakterler();
-    notifyListeners();
-    print('object');
+    notifyListeners(); // Dinleyicilere veri güncellendi bilgisini gönderir
   }
 
-  bool loadMore = false;
+  bool loadMore = false; // Yükleme işlemi devam ediyor mu?
+  int page = 1; // Şu anki sayfa numarası
 
+  // Yükleme durumunu günceller
+  void setloadmore(bool value) {
+    loadMore = value;
+    notifyListeners();
+  }
+
+  // Daha fazla karakter verisi çeker (sayfalama)
   void getkaraktermore() async {
-    // egerki zaten yükleme işlemi devam ediyorsa
-    // loadMore true ise tekrar yükleme işlemi yapma
-    if (loadMore) return;
+    if (loadMore) return; // Zaten yükleniyorsa tekrar çağırma
+    if (_karakterModelSonuc!.info.next == page) return; // Son sayfadaysa çağırma
 
-    loadMore = true;
+    setloadmore(true); // Yükleme başlatıldı
     final data = await _apiservice.getkarakterler(
       url: _karakterModelSonuc!.info.next,
     );
-    loadMore = false;
+    setloadmore(false); // Yükleme bitti
 
-    _karakterModelSonuc!.info = data.info;
+    page++; // Sayfa numarasını artır
 
-    _karakterModelSonuc!.karakter.addAll(data.karakter);
-    notifyListeners();
+    _karakterModelSonuc!.info = data.info; // Yeni infoyu güncelle
+    _karakterModelSonuc!.karakter.addAll(data.karakter); // Yeni karakterleri ekle
+    notifyListeners(); // Dinleyicilere veri güncellendi bilgisini gönder
   }
 }
