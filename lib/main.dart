@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/Thema/thema.dart';
 
 import 'package:rickandmorty/app/Thema/router.dart';
+import 'package:rickandmorty/app/getit.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  setupGetIt();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
