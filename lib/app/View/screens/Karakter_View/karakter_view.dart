@@ -18,11 +18,25 @@ class KarakterView extends StatelessWidget {
               _searchinputWidget(context),
 
               // Burada karakterlerin listeleneceği alan
-              const KarakterCardview(),
-
-              SizedBox(height: 18),
+              const KarakterCardview(
+                image:
+                    'https://rickandmortyapi.com/api/character/avatar/248.jpeg',
+                name: 'rick sanchez',
+                type: 'Earth',
+                status: 'Yasiyir',
+                origin: 'insan',
+              ),
+              //
+              const KarakterCardview(
+                image:
+                    'https://rickandmortyapi.com/api/character/avatar/248.jpeg',
+                name: 'rick sanchez',
+                type: 'Earth',
+                status: 'Yasiyir',
+                origin: 'insan',
+              ),
               // SizedBox(height: 18),
-              const KarakterCardview(),
+              // const KarakterCardview(),
             ],
           ),
         ),
