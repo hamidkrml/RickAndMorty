@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rickandmorty/models/karakter_model.dart';
 
 class KarakterCardview extends StatelessWidget {
-  final String image;
-  final String name;
-  final String type;
-  final String status;
-  final String origin;
-
-  const KarakterCardview({
-    super.key,
-    required this.image,
-    required this.name,
-    required this.type,
-    required this.status,
-    required this.origin,
-  });
+  final KarakterInfo gelenveri;
+  const KarakterCardview({super.key, required this.gelenveri});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +24,7 @@ class KarakterCardview extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(image, height: 100.0),
+                  child: Image.network(gelenveri.image, height: 100.0),
                 ),
 
                 Padding(
@@ -47,16 +36,19 @@ class KarakterCardview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        gelenveri.name,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       //
-                      _infoWidget(type: 'ricksan', value: origin),
+                      _infoWidget(type: 'koken', value: gelenveri.origin.name),
                       //
-                      _infoWidget(type: 'ricksan', value: status),
+                      _infoWidget(
+                        type: 'durum',
+                        value: '${gelenveri.status} - ${gelenveri.species}',
+                      ),
                     ],
                   ),
                 ),
@@ -75,21 +67,19 @@ class KarakterCardview extends StatelessWidget {
 
   Column _infoWidget({required String type, required String value}) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          type,
-
-          //
-          // Burada type bilgisi icin font size ve font weight ayarlandi
-          //
-          style: TextStyle(
-            fontSize: 10,
-            //
-            fontWeight: FontWeight.w300,
+        Text(type, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300)),
+        SizedBox(height: 6.0),
+        SizedBox(
+          width: 120, // Genişliği ihtiyacına göre ayarlayabilirsin
+          child: Text(
+            value,
+            style: TextStyle(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        SizedBox(height: 6.0),
-        Text(value, style: TextStyle()),
       ],
     );
   }

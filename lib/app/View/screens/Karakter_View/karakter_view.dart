@@ -36,7 +36,17 @@ class _KarakterViewState extends State<KarakterView> {
                   if (viewmodel.karakterModelSonuc == null) {
                     return const CircularProgressIndicator.adaptive();
                   } else {
-                    return const Text('verigelid');
+                    return Flexible(
+                      child: ListView.builder(
+                        itemCount:
+                            viewmodel.karakterModelSonuc!.karakter.length,
+                        itemBuilder: (context, index) {
+                          final gelenveri =
+                              viewmodel.karakterModelSonuc!.karakter[index];
+                          return KarakterCardview(gelenveri: gelenveri);
+                        },
+                      ),
+                    );
                   }
                 },
               ),

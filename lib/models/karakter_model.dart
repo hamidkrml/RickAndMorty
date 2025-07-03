@@ -47,6 +47,7 @@ class KarakterInfo {
   final String image;
   final Location location;
   final List<String> episode;
+  final Origin origin;
 
   // KarakterInfo sınıfı, bir karakterin tüm temel bilgilerini (id, isim, durum, tür, cinsiyet, resim, konum ve bölüm listesi) tutar.
   KarakterInfo({
@@ -57,6 +58,7 @@ class KarakterInfo {
     required this.gender,
     required this.image,
     required this.location,
+    required this.origin,
     required this.episode,
   });
 
@@ -68,6 +70,7 @@ class KarakterInfo {
       species = json['species'],
       gender = json['gender'],
       image = json['image'],
+      origin = Origin.fromJson(json['origin']),
       location = Location.fromJson(json['location']),
       episode = List<String>.from(json['episode']);
 }
@@ -81,6 +84,19 @@ class Location {
 
   /// JSON verisinden Location nesnesi oluşturur.
   Location.fromJson(Map<String, dynamic> json)
+    : name = json['name'],
+      url = json['url'];
+}
+
+class Origin {
+  final String name;
+  final String url;
+
+  // Location sınıfı, karakterin bulunduğu konumun adını ve URL'sini tutar.
+  Origin({required this.name, required this.url});
+
+  /// JSON verisinden Location nesnesi oluşturur.
+  Origin.fromJson(Map<String, dynamic> json)
     : name = json['name'],
       url = json['url'];
 }
