@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rickandmorty/app/View/AppView.dart';
@@ -5,6 +6,7 @@ import 'package:rickandmorty/app/View/screens/Bolumler_View/bolumler_view.dart';
 import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_view.dart';
 import 'package:rickandmorty/app/View/screens/Konum_View/konum_view.dart';
 import 'package:rickandmorty/app/View/screens/Favori_View/favori_view.dart';
+import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
 
 final _routerKey = GlobalKey<NavigatorState>();
 
@@ -29,7 +31,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.characters,
-              builder: (context, state) => const KarakterView(),
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => KarakterViewmodel(),
+                child: const KarakterView(),
+              ),
             ),
           ],
         ),

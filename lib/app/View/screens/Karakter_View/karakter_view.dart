@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
 import 'package:rickandmorty/app/View/widgets/karakter_cardview.dart';
 
-class KarakterView extends StatelessWidget {
+class KarakterView extends StatefulWidget {
   const KarakterView({super.key});
 
   @override
+  State<KarakterView> createState() => _KarakterViewState();
+}
+
+class _KarakterViewState extends State<KarakterView> {
+  @override
+  @override
+  void initState() {
+    super.initState();
+    context.read<KarakterViewmodel>().getkarakterler();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -18,22 +31,14 @@ class KarakterView extends StatelessWidget {
               _searchinputWidget(context),
 
               // Burada karakterlerin listeleneceği alan
-              const KarakterCardview(
-                image:
-                    'https://rickandmortyapi.com/api/character/avatar/248.jpeg',
-                name: 'rick sanchez',
-                type: 'Earth',
-                status: 'Yasiyir',
-                origin: 'insan',
-              ),
-              //
-              const KarakterCardview(
-                image:
-                    'https://rickandmortyapi.com/api/character/avatar/248.jpeg',
-                name: 'rick sanchez',
-                type: 'Earth',
-                status: 'Yasiyir',
-                origin: 'insan',
+              Consumer<KarakterViewmodel>(
+                builder: (context, viewmodel, child) {
+                  if (viewmodel.karakterModelSonuc == null) {
+                    return const CircularProgressIndicator.adaptive();
+                  } else {
+                    return const Text('verigelid');
+                  }
+                },
               ),
               // SizedBox(height: 18),
               // const KarakterCardview(),

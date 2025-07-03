@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rickandmorty/app/Thema/thema.dart';
 
 import 'package:rickandmorty/app/Thema/router.dart';
-import 'package:rickandmorty/app/getit.dart';
+import 'package:rickandmorty/service/getit.dart';
 
 void main() {
   setupGetIt();
