@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
+import 'package:rickandmorty/app/View/widgets/karakter_card_listview.dart';
 import 'package:rickandmorty/app/View/widgets/karakter_cardview.dart';
 
 class KarakterView extends StatefulWidget {
@@ -36,16 +37,9 @@ class _KarakterViewState extends State<KarakterView> {
                   if (viewmodel.karakterModelSonuc == null) {
                     return const CircularProgressIndicator.adaptive();
                   } else {
-                    return Flexible(
-                      child: ListView.builder(
-                        itemCount:
-                            viewmodel.karakterModelSonuc!.karakter.length,
-                        itemBuilder: (context, index) {
-                          final gelenveri =
-                              viewmodel.karakterModelSonuc!.karakter[index];
-                          return KarakterCardview(gelenveri: gelenveri);
-                        },
-                      ),
+                    return KarakterCardListview(
+                      karakter: viewmodel.karakterModelSonuc!.karakter,
+                      onLoadMore: () => viewmodel.getkaraktermore(),
                     );
                   }
                 },

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class KarakterModelSonuc {
-  final KarakterModel info;
+  KarakterModel info;
   final List<KarakterInfo> karakter;
 
   KarakterModelSonuc({required this.info, required this.karakter});
