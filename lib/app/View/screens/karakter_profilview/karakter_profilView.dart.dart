@@ -8,9 +8,42 @@ class KarakterProfilview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppbarWidgets(title: 'karakterler', transparent: true),
-      body: Center(child: Text(gelenveri.name ?? "No Name")),
+    return SafeArea(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: const AppbarWidgets(title: 'karakterler', transparent: true),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/Images/image.png'),
+              alignment: Alignment.topCenter,
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [_karakterAvatar(context)],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _karakterAvatar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 89, bottom: 52),
+      child: CircleAvatar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        radius: 100,
+        child: CircleAvatar(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          radius: 98,
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(gelenveri.image),
+            radius: 95,
+          ),
+        ),
+      ),
     );
   }
 }
