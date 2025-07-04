@@ -27,7 +27,8 @@ class KarakterViewmodel extends ChangeNotifier {
   // Daha fazla karakter verisi çeker (sayfalama)
   void getkaraktermore() async {
     if (loadMore) return; // Zaten yükleniyorsa tekrar çağırma
-    if (_karakterModelSonuc!.info.next == page) return; // Son sayfadaysa çağırma
+    if (_karakterModelSonuc!.info.next == page)
+      return; // Son sayfadaysa çağırma
 
     setloadmore(true); // Yükleme başlatıldı
     final data = await _apiservice.getkarakterler(
@@ -37,8 +38,19 @@ class KarakterViewmodel extends ChangeNotifier {
 
     page++; // Sayfa numarasını artır
 
-    _karakterModelSonuc!.info = data.info; // Yeni infoyu güncelle
-    _karakterModelSonuc!.karakter.addAll(data.karakter); // Yeni karakterleri ekle
+    _karakterModelSonuc!.info = data!.info; // Yeni infoyu güncelle
+    _karakterModelSonuc!.karakter.addAll(
+      data.karakter,
+    ); // Yeni karakterleri ekle
     notifyListeners(); // Dinleyicilere veri güncellendi bilgisini gönder
+  }
+
+  void getkarakterarama(String name) async {
+    _karakterModelSonuc = null; // Önceki veriyi temizle
+    notifyListeners(); // Dinleyicilere veri güncellendi bilgisini gönder
+    _karakterModelSonuc = await _apiservice.getkarakterler(
+      args: {'name': name},
+    );
+    notifyListeners();
   }
 }

@@ -21,6 +21,7 @@ class _KarakterViewState extends State<KarakterView> {
 
   @override
   Widget build(BuildContext context) {
+    final viewmodel = context.watch<KarakterViewmodel>();
     return Scaffold(
       body: Center(
         child: Padding(
@@ -28,24 +29,17 @@ class _KarakterViewState extends State<KarakterView> {
           child: Column(
             children: [
               const SizedBox(height: 12), // Üstte boşluk bırakır
-              _searchinputWidget(context), // Arama kutusu
-
+              _searchinputWidget(context, viewmodel: viewmodel), // Arama kutusu
               // Karakterlerin listeleneceği alan
-              Consumer<KarakterViewmodel>(
-                builder: (context, viewmodel, child) {
-                  if (viewmodel.karakterModelSonuc == null) {
-                    // Veri gelene kadar yükleniyor göstergesi
-                    return const CircularProgressIndicator.adaptive();
-                  } else {
-                    // Karakter kartlarını liste olarak gösterir
-                    return KarakterCardListview(
+              viewmodel.karakterModelSonuc == null
+                  // Veri gelene kadar yükleniyor göstergesi
+                  ? const CircularProgressIndicator.adaptive()
+                  // Karakter kartlarını liste olarak gösterir
+                  : KarakterCardListview(
                       karakter: viewmodel.karakterModelSonuc!.karakter,
                       onLoadMore: () => viewmodel.getkaraktermore(),
                       loadMore: viewmodel.loadMore,
-                    );
-                  }
-                },
-              ),
+                    ),
             ],
           ),
         ),
@@ -54,10 +48,15 @@ class _KarakterViewState extends State<KarakterView> {
   }
 
   // Arama kutusu widget'ı
-  Widget _searchinputWidget(BuildContext context) {
+  Widget _searchinputWidget(
+    BuildContext context, {
+    required KarakterViewmodel viewmodel,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 16.0),
-      child: TextField(
+      child: TextFormField(
+        textInputAction: TextInputAction.search,
+        onFieldSubmitted: viewmodel.getkarakterarama,
         decoration: InputDecoration(
           labelText: 'Karakterlerde ara',
           labelStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
