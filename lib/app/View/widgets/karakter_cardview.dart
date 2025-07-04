@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
+import 'package:rickandmorty/service/getit.dart';
+import 'package:rickandmorty/service/preferences_api.dart';
 
-class KarakterCardview extends StatelessWidget {
+class KarakterCardview extends StatefulWidget {
+  bool isfavorite;
   final KarakterInfo gelenveri;
-  const KarakterCardview({super.key, required this.gelenveri});
+  KarakterCardview({
+    super.key,
+    required this.gelenveri,
+    this.isfavorite = false,
+  });
+
+  @override
+  State<KarakterCardview> createState() => _KarakterCardviewState();
+}
+
+class _KarakterCardviewState extends State<KarakterCardview> {
+  void _favoriteControl() {
+    // Burada favori kontrolü yapılabilir
+    // Örneğin, widget.isfavorite durumuna göre bir işlem yapabilirsiniz
+
+    getIt<PreferencesService>().kayitkarakter(widget.gelenveri.id);
+    widget.isfavorite = true;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +45,7 @@ class KarakterCardview extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(gelenveri.image, height: 100.0),
+                  child: Image.network(widget.gelenveri.image, height: 100.0),
                 ),
 
                 Padding(
@@ -36,18 +57,22 @@ class KarakterCardview extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        gelenveri.name,
+                        widget.gelenveri.name,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       //
-                      _infoWidget(type: 'koken', value: gelenveri.origin.name),
+                      _infoWidget(
+                        type: 'koken',
+                        value: widget.gelenveri.origin.name,
+                      ),
                       //
                       _infoWidget(
                         type: 'durum',
-                        value: '${gelenveri.status} - ${gelenveri.species}',
+                        value:
+                            '${widget.gelenveri.status} - ${widget.gelenveri.species}',
                       ),
                     ],
                   ),
@@ -56,8 +81,10 @@ class KarakterCardview extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.bookmark_border),
+            onPressed: _favoriteControl,
+            icon: Icon(
+              widget.isfavorite ? Icons.bookmark : Icons.bookmark_border,
+            ),
             //
           ),
         ],

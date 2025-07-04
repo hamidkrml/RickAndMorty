@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
 import 'package:rickandmorty/app/View/widgets/karakter_card_listview.dart';
-import 'package:rickandmorty/app/View/widgets/karakter_cardview.dart';
+// import 'package:rickandmorty/app/View/widgets/karakter_cardview.dart';
 
 class KarakterView extends StatefulWidget {
   const KarakterView({super.key});

@@ -4,8 +4,9 @@ import 'package:rickandmorty/app/Thema/thema.dart';
 import 'package:rickandmorty/app/Thema/router.dart';
 import 'package:rickandmorty/service/getit.dart';
 
-void main() {
-  setupGetIt();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupGetIt();
   runApp(const MyApp());
 }
 
