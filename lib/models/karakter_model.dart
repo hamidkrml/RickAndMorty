@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class KarakterModelSonuc {
   KarakterModel info;
   final List<KarakterInfo> karakter;

@@ -8,7 +8,6 @@ class Appview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBarWidget(),
       body: navigationShell,
       bottomNavigationBar: NavigationBarTheme(
         // navigation bar in castim secili olanin rengini degistiriyoruz
@@ -86,19 +85,9 @@ class Appview extends StatelessWidget {
             ? Theme.of(context).colorScheme.primary
             : Theme.of(context).colorScheme.tertiary,
       ),
-      label: 'Menü',
+      label: label,
     );
   }
 
   /// AppBarWidget fonksiyonu ile appbar i olusturuyoruz
-  AppBar _AppBarWidget() {
-    return AppBar(
-      centerTitle: false,
-      title: const Text(
-        'Rick And Morty',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-      ),
-      actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
-    );
-  }
 }

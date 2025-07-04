@@ -6,12 +6,8 @@ class KonumView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Konumlar'),
-      ),
-      body: const Center(
-        child: Text('Konumlar Sayfası'),
-      ),
+      appBar: AppBar(title: const Text('Konumlar')),
+      body: const Center(child: Text('Konumlar Sayfası')),
     );
   }
 }

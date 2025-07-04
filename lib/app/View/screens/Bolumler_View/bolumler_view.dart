@@ -6,12 +6,8 @@ class BolumlerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bölümler'),
-      ),
-      body: const Center(
-        child: Text('Bölümler Sayfası'),
-      ),
+      appBar: AppBar(title: const Text('Bölümler')),
+      body: const Center(child: Text('Bölümler Sayfası')),
     );
   }
 }
