@@ -21,4 +21,16 @@ class AppService {
   }
 
   Future getkaraktermore(String? next) async {}
+
+  Future<List<KarakterInfo>> getkarakterbyid(List<int> idlist) async {
+    try {
+      final response = await dio.get('/character/${idlist.join(',')}');
+      return (response.data as List)
+          .map((e) => KarakterInfo.fromJson(e))
+          .toList();
+    } catch (e) {
+      print('Hata: $e');
+      return [];
+    }
+  }
 }

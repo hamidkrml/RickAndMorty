@@ -7,10 +7,20 @@ class PreferencesService {
 
   final String _characterKey = 'characters';
 
+  void storekarakter(List<String> karakter) async {
+    await prefs.setStringList(_characterKey, karakter);
+  }
+
   void kayitkarakter(int id) async {
     final karakterlist = await prefs.getStringList(_characterKey) ?? [];
     karakterlist.add(id.toString());
-    await prefs.setStringList(_characterKey, karakterlist);
+    storekarakter(karakterlist);
+  }
+
+  void silkarakter(int id) async {
+    final karakterlist = prefs.getStringList(_characterKey) ?? [];
+    karakterlist.remove(id.toString());
+    storekarakter(karakterlist);
   }
 
   List<int> getkarakter() {
