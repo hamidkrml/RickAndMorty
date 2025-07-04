@@ -4,16 +4,19 @@ import 'package:rickandmorty/models/karakter_model.dart';
 class AppService {
   final dio = Dio(BaseOptions(baseUrl: 'https://rickandmortyapi.com/api'));
 
-  Future<KarakterModelSonuc> getkarakterler({String? url}) async {
+  Future<KarakterModelSonuc?> getkarakterler({
+    String? url,
+    Map<String, dynamic>? args,
+  }) async {
     try {
-      final response = await dio.get(url ?? '/character');
+      final response = await dio.get(
+        url ?? '/character',
+        queryParameters: args,
+      );
       return KarakterModelSonuc.fromJson(response.data);
-    } on DioException catch (e) {
-      print('DioException: ${e.message}');
-      rethrow;
     } catch (e) {
       print('Hata: $e');
-      rethrow;
+      return null;
     }
   }
 
