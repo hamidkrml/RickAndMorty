@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
+import 'package:rickandmorty/app/View/widgets/appbar_widgets.dart';
 import 'package:rickandmorty/app/View/widgets/karakter_card_listview.dart';
 // import 'package:rickandmorty/app/View/widgets/karakter_cardview.dart';
 
@@ -23,6 +24,7 @@ class _KarakterViewState extends State<KarakterView> {
   Widget build(BuildContext context) {
     final viewmodel = context.watch<KarakterViewmodel>();
     return Scaffold(
+      appBar: const AppbarWidgets(title: 'karakterler'),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),

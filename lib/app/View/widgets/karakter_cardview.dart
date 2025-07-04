@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rickandmorty/app/Thema/router.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
 import 'package:rickandmorty/service/getit.dart';
 import 'package:rickandmorty/service/preferences_api.dart';
@@ -20,74 +22,85 @@ class _KarakterCardviewState extends State<KarakterCardview> {
   void _favoriteControl() {
     // Burada favori kontrolü yapılabilir
     // Örneğin, widget.isfavorite durumuna göre bir işlem yapabilirsiniz
+    if (widget.isfavorite) {
+      getIt<PreferencesService>().silkarakter(widget.gelenveri.id);
+      widget.isfavorite = false;
+    } else {
+      getIt<PreferencesService>().kayitkarakter(widget.gelenveri.id);
+      widget.isfavorite = true;
+    }
 
-    getIt<PreferencesService>().kayitkarakter(widget.gelenveri.id);
-    widget.isfavorite = true;
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(6),
-            ),
+    return GestureDetector(
+      onTap: () => context.push(
+        AppRoutes.charactersProfilePage,
+        extra: widget.gelenveri,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: BorderRadius.circular(6),
+              ),
 
-            ///resimin yaninda bilgiler yer alacagi icin Row widgeti kullanildi
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(widget.gelenveri.image, height: 100.0),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 17,
+              ///resimin yaninda bilgiler yer alacagi icin Row widgeti kullanildi
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(widget.gelenveri.image, height: 100.0),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.gelenveri.name,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 6,
+                      horizontal: 17,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.gelenveri.name,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      //
-                      _infoWidget(
-                        type: 'koken',
-                        value: widget.gelenveri.origin.name,
-                      ),
-                      //
-                      _infoWidget(
-                        type: 'durum',
-                        value:
-                            '${widget.gelenveri.status} - ${widget.gelenveri.species}',
-                      ),
-                    ],
+                        //
+                        _infoWidget(
+                          type: 'koken',
+                          value: widget.gelenveri.origin.name,
+                        ),
+                        //
+                        _infoWidget(
+                          type: 'durum',
+                          value:
+                              '${widget.gelenveri.status} - ${widget.gelenveri.species}',
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: _favoriteControl,
-            icon: Icon(
-              widget.isfavorite ? Icons.bookmark : Icons.bookmark_border,
+            IconButton(
+              onPressed: _favoriteControl,
+              icon: Icon(
+                widget.isfavorite ? Icons.bookmark : Icons.bookmark_border,
+              ),
+              //
             ),
-            //
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

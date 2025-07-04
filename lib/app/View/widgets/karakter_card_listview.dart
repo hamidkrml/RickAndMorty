@@ -49,19 +49,21 @@ class _KarakterCardListviewState extends State<KarakterCardListview> {
 
   //
   void _detectScrollBottom() {
-    _scrollController.addListener(() {
-      final maxScrol = _scrollController
-          .position
-          .maxScrollExtent; // Scroll'un maksimum yüksekliği
-      final currentPosition =
-          _scrollController.position.pixels; // Scroll'un mevcut pozisyonu
-      final delta = 200; // Alt sınır mesafesi
+    if (widget.onLoadMore != null) {
+      _scrollController.addListener(() {
+        final maxScrol = _scrollController
+            .position
+            .maxScrollExtent; // Scroll'un maksimum yüksekliği
+        final currentPosition =
+            _scrollController.position.pixels; // Scroll'un mevcut pozisyonu
+        final delta = 200; // Alt sınır mesafesi
 
-      // Kullanıcı listenin sonuna yaklaşınca yeni veri yükle
-      if (maxScrol - currentPosition < delta) {
-        widget.onLoadMore!();
-      }
-    });
+        // Kullanıcı listenin sonuna yaklaşınca yeni veri yükle
+        if (maxScrol - currentPosition < delta) {
+          widget.onLoadMore!;
+        }
+      });
+    }
   }
 
   @override
