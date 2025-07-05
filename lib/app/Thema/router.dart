@@ -8,6 +8,7 @@ import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_view.dart';
 import 'package:rickandmorty/app/View/screens/Konum_View/konum_view.dart';
 import 'package:rickandmorty/app/View/screens/Favori_View/favori_view.dart';
 import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
+import 'package:rickandmorty/app/View/screens/Konum_View/konum_viewmodel.dart';
 import 'package:rickandmorty/app/View/screens/karakter_profilview/karakter_profilView.dart.dart';
 import 'package:rickandmorty/app/View/screens/karakter_profilview/karakter_profilviewmodel.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
@@ -71,7 +72,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.locations,
-              builder: (context, state) => const KonumView(),
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => KonumViewmodel(),
+                child: const KonumView(),
+              ),
             ),
           ],
         ),
