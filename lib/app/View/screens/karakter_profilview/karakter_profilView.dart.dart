@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickandmorty/app/View/screens/karakter_profilview/karakter_profilviewmodel.dart';
 import 'package:rickandmorty/app/View/widgets/appbar_widgets.dart';
+import 'package:rickandmorty/app/View/widgets/decoration_widgets.dart';
 import 'package:rickandmorty/models/bolum_model.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
 
@@ -29,42 +30,18 @@ class _KarakterProfilviewState extends State<KarakterProfilview> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: const AppbarWidgets(title: 'karakterler', transparent: true),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/Images/image.png'),
-              alignment: Alignment.topCenter,
-              fit: BoxFit.fitWidth,
-            ),
-          ),
+        body: DecorationWidgets(
+          topChild: _karakterAvatar(context),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _karakterAvatar(context),
+              SizedBox(height: 13),
+              _karakterName(),
+              SizedBox(height: 15),
+              _labelView(context),
+              SizedBox(height: 28),
+              _scanestitle(),
 
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(50),
-                    ),
-                  ),
-
-                  child: Column(
-                    children: [
-                      SizedBox(height: 13),
-                      _karakterName(),
-                      SizedBox(height: 15),
-                      _labelView(context),
-                      SizedBox(height: 28),
-                      _scanestitle(),
-
-                      _epsidolistView(),
-                    ],
-                  ),
-                ),
-              ),
+              _epsidolistView(),
             ],
           ),
         ),

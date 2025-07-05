@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:rickandmorty/models/bolum_model.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
+import 'package:rickandmorty/models/konum_model.dart';
 
 class AppService {
   final dio = Dio(BaseOptions(baseUrl: 'https://rickandmortyapi.com/api'));
@@ -48,6 +49,15 @@ class AppService {
       return (response.data as List)
           .map((e) => EpisodeModel.fromMap(e))
           .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<LocationModel> getAlllocation() async {
+    try {
+      final response = await dio.get('/location');
+      return LocationModel.fromMap(response.data);
     } catch (e) {
       rethrow;
     }
