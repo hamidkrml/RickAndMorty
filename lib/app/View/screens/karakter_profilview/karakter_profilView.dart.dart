@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rickandmorty/app/View/screens/karakter_profilview/karakter_profilviewmodel.dart';
 import 'package:rickandmorty/app/View/widgets/appbar_widgets.dart';
+import 'package:rickandmorty/models/bolum_model.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
 
-class KarakterProfilview extends StatelessWidget {
+class KarakterProfilview extends StatefulWidget {
   final KarakterInfo gelenveri;
   const KarakterProfilview({super.key, required this.gelenveri});
+
+  @override
+  State<KarakterProfilview> createState() => _KarakterProfilviewState();
+}
+
+class _KarakterProfilviewState extends State<KarakterProfilview> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    context.read<KarakterProfilviewmodel>().getEpisodes(
+      widget.gelenveri.episode,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +59,8 @@ class KarakterProfilview extends StatelessWidget {
                       _labelView(context),
                       SizedBox(height: 28),
                       _scanestitle(),
+
+                      _epsidolistView(),
                     ],
                   ),
                 ),
@@ -53,9 +72,37 @@ class KarakterProfilview extends StatelessWidget {
     );
   }
 
+  Flexible _epsidolistView() {
+    return Flexible(
+      child: Consumer<KarakterProfilviewmodel>(
+        builder: (context, viewmodel, child) {
+          return ListView.separated(
+            padding: EdgeInsets.zero,
+            itemCount: viewmodel.episodes.length,
+            itemBuilder: (context, index) {
+              final EpisodeModel model = viewmodel.episodes[index];
+              return ListTile(
+                leading: Icon(Icons.face, size: 35),
+                title: Text(model.episode),
+                subtitle: Text(model.name),
+
+                trailing: Icon(Icons.keyboard_arrow_right),
+              );
+            },
+            separatorBuilder: (context, index) => Divider(
+              color: Theme.of(context).colorScheme.tertiary,
+              indent: 20,
+              endIndent: 20,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Text _karakterName() {
     return Text(
-      gelenveri.name,
+      widget.gelenveri.name,
       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
     );
   }
@@ -65,7 +112,7 @@ class KarakterProfilview extends StatelessWidget {
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.symmetric(horizontal: 18),
       child: Text(
-        'bolumler(${gelenveri.episode.length})',
+        'bolumler(${widget.gelenveri.episode.length})',
         style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
       ),
     );
@@ -79,10 +126,10 @@ class KarakterProfilview extends StatelessWidget {
         runSpacing: 14,
         spacing: 10,
         children: [
-          _labelWidgets(context, label: gelenveri.status),
-          _labelWidgets(context, label: gelenveri.origin.name),
-          _labelWidgets(context, label: gelenveri.gender),
-          _labelWidgets(context, label: gelenveri.species),
+          _labelWidgets(context, label: widget.gelenveri.status),
+          _labelWidgets(context, label: widget.gelenveri.origin.name),
+          _labelWidgets(context, label: widget.gelenveri.gender),
+          _labelWidgets(context, label: widget.gelenveri.species),
         ],
       ),
     );
@@ -110,7 +157,7 @@ class KarakterProfilview extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.surface,
           radius: 98,
           child: CircleAvatar(
-            backgroundImage: NetworkImage(gelenveri.image),
+            backgroundImage: NetworkImage(widget.gelenveri.image),
             radius: 95,
           ),
         ),

@@ -9,6 +9,7 @@ import 'package:rickandmorty/app/View/screens/Konum_View/konum_view.dart';
 import 'package:rickandmorty/app/View/screens/Favori_View/favori_view.dart';
 import 'package:rickandmorty/app/View/screens/Karakter_View/karakter_viewmodel.dart';
 import 'package:rickandmorty/app/View/screens/karakter_profilview/karakter_profilView.dart.dart';
+import 'package:rickandmorty/app/View/screens/karakter_profilview/karakter_profilviewmodel.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
 
 final _routerKey = GlobalKey<NavigatorState>();
@@ -44,8 +45,11 @@ final router = GoRouter(
               routes: [
                 GoRoute(
                   path: AppRoutes.charactersProfile,
-                  builder: (context, state) => KarakterProfilview(
-                    gelenveri: state.extra as KarakterInfo,
+                  builder: (context, state) => ChangeNotifierProvider(
+                    create: (context) => KarakterProfilviewmodel(),
+                    child: KarakterProfilview(
+                      gelenveri: state.extra as KarakterInfo,
+                    ),
                   ),
                 ),
               ],

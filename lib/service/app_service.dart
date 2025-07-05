@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:rickandmorty/models/bolum_model.dart';
 import 'package:rickandmorty/models/karakter_model.dart';
 
 class AppService {
@@ -31,6 +32,24 @@ class AppService {
     } catch (e) {
       print('Hata: $e');
       return [];
+    }
+  }
+
+  Future<List<EpisodeModel>> getMultipleEpisodes(List<String> list) async {
+    try {
+      final List<String> episodeNumbers = list
+          .map((e) => e.split('/').last)
+          .toList();
+
+      String episodes = episodeNumbers.join(',');
+      if (list.length == 1) episodes = '$episodes,';
+
+      final response = await dio.get('/episode/$episodes');
+      return (response.data as List)
+          .map((e) => EpisodeModel.fromMap(e))
+          .toList();
+    } catch (e) {
+      rethrow;
     }
   }
 }
