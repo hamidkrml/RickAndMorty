@@ -37,25 +37,11 @@ class KarakterProfilview extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 13),
-                      Text(
-                        gelenveri.name,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      _karakterName(),
                       SizedBox(height: 15),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text('data', style: TextStyle(fontSize: 15)),
-                      ),
+                      _labelView(context),
+                      SizedBox(height: 28),
+                      _scanestitle(),
                     ],
                   ),
                 ),
@@ -64,6 +50,53 @@ class KarakterProfilview extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Text _karakterName() {
+    return Text(
+      gelenveri.name,
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    );
+  }
+
+  Container _scanestitle() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.symmetric(horizontal: 18),
+      child: Text(
+        'bolumler(${gelenveri.episode.length})',
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  Padding _labelView(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        runSpacing: 14,
+        spacing: 10,
+        children: [
+          _labelWidgets(context, label: gelenveri.status),
+          _labelWidgets(context, label: gelenveri.origin.name),
+          _labelWidgets(context, label: gelenveri.gender),
+          _labelWidgets(context, label: gelenveri.species),
+        ],
+      ),
+    );
+  }
+
+  Container _labelWidgets(BuildContext context, {required String label}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(label, style: TextStyle(fontSize: 12)),
     );
   }
 
